@@ -10,12 +10,12 @@ a los usuarios leer, modificar y borrar sus datos. También existe un endpoint p
 
 | Método | Ruta | Descripción | Respuestas |
 |--------|------|-------------|------------|
-|        |      |             |            |
-|        |      |             |            |
-|        |      |             |            |
-|        |      |             |            |
-|        |      |             |            |
-|        |      |             |            |
+|POST    |/api/users    |             |            |
+|POST    |/api/users/me/session     |             |            |
+|DELETE  |/api/users/me/session      |             |            |
+|GET     |/api/users/me      |             |            |
+|PUSH    |/api/users/me      |             |            |
+|DELETE  |/api/users/me      |             |            |
 
 
 ## Comandos 
