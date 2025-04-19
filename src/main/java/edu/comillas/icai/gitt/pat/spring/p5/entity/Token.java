@@ -19,5 +19,16 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 public class Token {
     @Id @GeneratedValue(strategy = GenerationType.UUID) public String id;
+    @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private AppUser appUser;
+
+    public AppUser getAppUser() {
+        return appUser;
+    }
+
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
+    }
 
 }
