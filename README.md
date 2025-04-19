@@ -14,7 +14,7 @@ a los usuarios leer, modificar y borrar sus datos. También existe un endpoint p
 |POST    |/api/users/me/session     |	Inicia sesión; crea cookie de sesión si las credenciales son válidas             |201 Created, 401 Unauthorized           |
 |DELETE  |/api/users/me/session      |Cierra sesión; invalida cookie de sesión             |204 No Content, 401 Unauthorized            |
 |GET     |/api/users/me      |	Devuelve perfil del usuario autenticado             | 200 OK, 401 Unauthorized           |
-|PUSH    |/api/users/me      |Actualiza perfil del usuario autenticado             |200 OK, 401 Unauthorized            |
+|PUT  |/api/users/me      |Actualiza perfil del usuario autenticado             |200 OK, 401 Unauthorized            |
 |DELETE  |/api/users/me      |	Elimina al usuario autenticado             |204 No Content, 401 Unauthorized            |
 
 
