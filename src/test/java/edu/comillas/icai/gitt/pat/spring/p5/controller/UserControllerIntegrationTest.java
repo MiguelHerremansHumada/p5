@@ -54,11 +54,17 @@ class UserControllerIntegrationTest {
      * (no cumple condiciones)
      */
     @Test void registerInvalidPassword() throws Exception {
-        // Given ...
+        String request = "{" +
+                "\"name\":\"" + NAME + "\"," +
+                "\"email\":\"" + EMAIL + "\"," +
+                "\"role\":\"" + Role.USER + "\"," +
+                "\"password\":\"abc\"}";
 
-        // When ...
-
-                // Then ...
-
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.post("/api/users")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(request))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
+
 }
