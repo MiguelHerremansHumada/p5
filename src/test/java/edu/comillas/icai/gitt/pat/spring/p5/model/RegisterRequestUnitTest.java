@@ -35,6 +35,24 @@ class RegisterRequestUnitTest {
         // Then ...
         assertTrue(violations.isEmpty());
     }
+    @Test
+    public void testInvalidEmail_blank() {
+        RegisterRequest request = new RegisterRequest(
+                "Usuario", "", Role.USER, "Aa123456"
+        );
+        Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(request);
+        assertTrue(violations.stream().anyMatch(v -> v.getPropertyPath().toString().equals("email")));
+    }
+
+    @Test
+    public void testInvalidPassword_missingUppercase() {
+        RegisterRequest request = new RegisterRequest(
+                "Usuario", "usuario@email.com", Role.USER, "abcdefg1"
+        );
+        Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(request);
+        assertTrue(violations.stream().anyMatch(v -> v.getPropertyPath().toString().equals("password")));
+    }
+
 
 
 }
