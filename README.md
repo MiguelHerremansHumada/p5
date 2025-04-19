@@ -10,12 +10,12 @@ a los usuarios leer, modificar y borrar sus datos. También existe un endpoint p
 
 | Método | Ruta | Descripción | Respuestas |
 |--------|------|-------------|------------|
-|POST    |/api/users    |             |            |
-|POST    |/api/users/me/session     |             |            |
-|DELETE  |/api/users/me/session      |             |            |
-|GET     |/api/users/me      |             |            |
-|PUSH    |/api/users/me      |             |            |
-|DELETE  |/api/users/me      |             |            |
+|POST    |/api/users    |Registra un nuevo usuario con email, password, nombre, etc.             |201 Created, 409 Conflict si ya existe            |
+|POST    |/api/users/me/session     |	Inicia sesión; crea cookie de sesión si las credenciales son válidas             |201 Created, 401 Unauthorized           |
+|DELETE  |/api/users/me/session      |Cierra sesión; invalida cookie de sesión             |204 No Content, 401 Unauthorized            |
+|GET     |/api/users/me      |	Devuelve perfil del usuario autenticado             | 200 OK, 401 Unauthorized           |
+|PUSH    |/api/users/me      |Actualiza perfil del usuario autenticado             |200 OK, 401 Unauthorized            |
+|DELETE  |/api/users/me      |	Elimina al usuario autenticado             |204 No Content, 401 Unauthorized            |
 
 
 ## Comandos 
