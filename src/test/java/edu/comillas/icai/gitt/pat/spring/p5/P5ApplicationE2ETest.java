@@ -57,12 +57,37 @@ class P5ApplicationE2ETest {
      * respuesta de login cuando se proporcionan credenciales correctas
      */
     @Test public void loginOkTest() {
-        // Given ...
+        // Given: registro previo
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        String registro = "{" +
+                "\"name\":\"" + NAME + "\"," +
+                "\"email\":\"" + EMAIL + "\"," +
+                "\"role\":\"" + Role.USER + "\"," +
+                "\"password\":\"" + PASS + "\"}";
 
-        // When ...
+        client.exchange(
+                "http://localhost:8080/api/users",
+                HttpMethod.POST,
+                new HttpEntity<>(registro, headers),
+                String.class);
 
+        // Login
+        String login = "{" +
+                "\"email\":\"" + EMAIL + "\"," +
+                "\"password\":\"" + PASS + "\"}";
 
-        // Then ...
+        ResponseEntity<String> response = client.exchange(
+                "http://localhost:8080/api/users/me/session",
+                HttpMethod.POST,
+                new HttpEntity<>(login, headers),
+                String.class);
 
+        // Then
+        Assertions.assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        String setCookie = response.getHeaders().getFirst(HttpHeaders.SET_COOKIE);
+        Assertions.assertNotNull(setCookie);
+        Assertions.assertTrue(setCookie.contains("session="));
     }
+
 }
