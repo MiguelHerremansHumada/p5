@@ -21,15 +21,33 @@ class RepositoryIntegrationTest {
      * definidas respectivamente en ellos retornan el token y usuario guardados.
      */
     @Test void saveTest() {
-        // Given ...
+        // Given
         AppUser user = new AppUser();
+        user.setName("Test User");
+        user.setEmail("test@email.com");
+        user.setPassword("Hashed123");
+        user.setRole(Role.USER);
+
+        AppUser savedUser = appUserRepository.save(user);
+
         Token token = new Token();
+        token.setAppUser(savedUser);
+        Token savedToken = tokenRepository.save(token);
 
-        // When ...
+        // When
+        AppUser foundUser = appUserRepository.findByEmail("test@email.com");
+        Token foundToken = tokenRepository.findByAppUser(savedUser);
 
-        // Then ...
+        // Then
+        Assertions.assertNotNull(foundUser);
+        Assertions.assertEquals("Test User", foundUser.getName());
+        Assertions.assertEquals("test@email.com", foundUser.getEmail());
 
+
+        Assertions.assertNotNull(foundToken);
+        Assertions.assertEquals(savedUser.getId(), foundToken.getAppUser().getId());
     }
+
 
     /**
      * TODO#10
@@ -37,12 +55,29 @@ class RepositoryIntegrationTest {
      * cuando se borra un usuario, automáticamente se borran sus tokens asociados.
      */
     @Test void deleteCascadeTest() {
-        // Given ...
+        // Given
+        AppUser user = new AppUser();
+        user.setName("ToDelete");
+        user.setEmail("delete@me.com");
+        user.setPassword("Aa123456");
+        user.setRole(Role.USER);
 
-        // When ...
+        AppUser savedUser = appUserRepository.save(user);
 
-        // Then ...
+        Token token = new Token();
+        token.setAppUser(savedUser);
+        tokenRepository.save(token);
+
+        // Aseguramos que hay un usuario y un token
+        Assertions.assertEquals(1, appUserRepository.count());
+        Assertions.assertEquals(1, tokenRepository.count());
+
+        // When
+        appUserRepository.delete(savedUser);
+
+        // Then
         Assertions.assertEquals(0, appUserRepository.count());
-
+        Assertions.assertEquals(0, tokenRepository.count());
     }
+
 }
